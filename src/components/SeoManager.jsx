@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 const SITE_NAME = "Dr. Kapure's Hair Skin Laser Clinic"
 const DEFAULT_DESCRIPTION =
   'Dermatologist-led skin, hair, and laser treatments in Pune. Book consultation for acne, pigmentation, hair fall, anti-aging, and laser care.'
-const DEFAULT_IMAGE = '/logo.png'
+const DEFAULT_IMAGE = `${import.meta.env.BASE_URL}logo.png`
 
 const routeMeta = {
   '/': {
