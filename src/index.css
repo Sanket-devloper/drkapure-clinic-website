@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; overflow-x: hidden; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #F9FAFB;
+  color: #5A6578;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(192, 120, 120, 0.2);
+  color: #2D3442;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #C07878; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #1A2030; }
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-brand-gold to-brand-goldLight text-white px-6 py-3 rounded-full font-medium
+           hover:from-brand-dark hover:to-brand-dark transition-all duration-300 hover:shadow-lg
+           hover:scale-105 inline-flex items-center gap-2;
+  }
+  .btn-outline {
+    @apply border-2 border-brand-gold text-brand-heading px-6 py-3 rounded-full
+           font-medium hover:bg-brand-gold hover:text-white transition-all
+           duration-300 inline-flex items-center gap-2;
+  }
+  .section-padding { @apply py-16 px-4 md:px-8 lg:px-16 xl:px-24; }
+  .glass-card {
+    @apply bg-brand-card/60 backdrop-blur-sm rounded-2xl border border-brand-section/70
+           shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
+  .container-max { @apply max-w-7xl mx-auto; }
+}
+
+@layer utilities {
+  .text-mobile-safe {
+    word-break: keep-all;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+
+  .text-mobile-fluid {
+    font-size: clamp(0.92rem, 3.2vw, 1rem);
+    line-height: 1.55;
+  }
+}
+
+/* ── Gallery Marquee ── */
+.gallery-marquee {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.gallery-marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: gallery-scroll 30s linear infinite;
+}
+
+.gallery-marquee:hover .gallery-marquee-track {
+  animation-play-state: paused;
+}
+
+.gallery-card {
+  flex-shrink: 0;
+  width: 280px;
+  background: rgba(233, 236, 239, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 1rem;
+  border: 1px solid rgba(241, 243, 245, 0.7);
+  box-shadow: 0 1px 3px rgba(26, 32, 48, 0.06);
+  overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.gallery-card:hover {
+  box-shadow: 0 8px 24px rgba(26, 32, 48, 0.1);
+  transform: translateY(-4px);
+}
+
+/* ── Testimonials Marquee ── */
+.testimonials-marquee {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+}
+
+.testimonials-marquee-track {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  animation: testimonials-scroll 34s linear infinite;
+}
+
+.testimonials-marquee:hover .testimonials-marquee-track {
+  animation-play-state: paused;
+}
+
+.review-text-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@keyframes gallery-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-280px * 6 - 1rem * 6)); }
+}
+
+@keyframes testimonials-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Improve smoothness on low-end devices and respect accessibility settings. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .gallery-marquee-track {
+    animation: none !important;
+  }
+
+  .testimonials-marquee-track {
+    animation: none !important;
+  }
+}
