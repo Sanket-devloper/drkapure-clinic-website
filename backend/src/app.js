@@ -81,11 +81,14 @@ app.use((error, _req, res, _next) => {
 
   console.error('[API Error]', error)
 
+  const shouldExposeError = env.nodeEnv !== 'production' || env.debugPublicErrors
+  const exposedMessage = error?.message || 'Something went wrong.'
+
   return res.status(500).json({
     success: false,
-    message: env.nodeEnv === 'production'
-      ? 'Something went wrong. Please try again later.'
-      : (error?.message || 'Something went wrong.'),
+    message: shouldExposeError
+      ? exposedMessage
+      : 'Something went wrong. Please try again later.',
   })
 })
 

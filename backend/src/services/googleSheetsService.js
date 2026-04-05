@@ -46,6 +46,27 @@ function isRetryableError(error) {
   return false
 }
 
+function isAuthOrKeyError(error) {
+  const code = String(error?.code || '').toUpperCase()
+  const message = String(error?.message || '').toLowerCase()
+
+  return (
+    code === 'ERR_OSSL_EVP_UNSUPPORTED'
+    || message.includes('decoder routines::unsupported')
+    || message.includes('invalid pem')
+    || message.includes('private key')
+    || message.includes('invalid_grant')
+  )
+}
+
+function createFallbackLeadResult(reason) {
+  return {
+    storedInSheet: false,
+    reason,
+    leadId: `TEMP-${Date.now()}`,
+  }
+}
+
 function monthSheetName(date = new Date()) {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
@@ -256,13 +277,15 @@ async function appendLeadBatchWithRetry(leads) {
     catch (error) {
       lastError = error
       const retryable = isRetryableError(error)
+      const authOrKeyError = isAuthOrKeyError(error)
       const willRetry = retryable && attempt < MAX_RETRY_ATTEMPTS
 
-      console.error(
+      const log = authOrKeyError ? console.warn : console.error
+      log(
         `[GoogleSheets] Batch attempt ${attempt}/${MAX_RETRY_ATTEMPTS} failed: ${error.message}`,
       )
 
-      if (!willRetry) break
+      if (!willRetry || authOrKeyError) break
 
       const backoffMs = attempt * 700
       console.warn(`[GoogleSheets] Retrying batch in ${backoffMs}ms...`)
@@ -347,12 +370,14 @@ export async function flushPendingLeadQueue() {
 
 export async function appendLeadToGoogleSheet(lead) {
   if (!isConfigured()) {
-    return {
-      storedInSheet: false,
-      reason: 'Google Sheets credentials are not configured yet.',
-      leadId: `TEMP-${Date.now()}`,
-    }
+    return createFallbackLeadResult('Google Sheets credentials are missing or invalid.')
   }
 
-  return queueLeadForBatch(lead)
+  try {
+    return await queueLeadForBatch(lead)
+  }
+  catch (error) {
+    console.warn(`[GoogleSheets] Lead accepted without sheet write: ${error.message}`)
+    return createFallbackLeadResult('Google Sheets is temporarily unavailable. Your request was received.')
+  }
 }

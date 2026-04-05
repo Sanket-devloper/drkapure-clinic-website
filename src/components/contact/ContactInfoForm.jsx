@@ -157,9 +157,15 @@ export default function ContactInfoForm() {
         throw new Error(errorMessage)
       }
 
+      const storedInSheet = result?.data?.sheet?.storedInSheet === true
+
       setSubmitStatus('success')
       setSubmitProgress('')
-      setSubmitMessage('Your appointment request has been submitted. Our team will contact you shortly.')
+      setSubmitMessage(
+        storedInSheet
+          ? 'Your appointment request has been submitted. Our team will contact you shortly.'
+          : 'Your request was received successfully. Our team will contact you shortly.',
+      )
       form.reset()
     }
     catch (error) {

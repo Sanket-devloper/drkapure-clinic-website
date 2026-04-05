@@ -39,6 +39,9 @@ This backend is prepared for low-maintenance lead handling:
 - `GOOGLE_SPREADSHEET_ID=...`
 - `GOOGLE_SERVICE_ACCOUNT_EMAIL=...`
 - `GOOGLE_PRIVATE_KEY=...`
+- Optional alternative: `GOOGLE_PRIVATE_KEY_BASE64=...`
+
+The backend accepts either an escaped PEM private key or a base64-encoded PEM. If the key cannot be parsed, lead submissions still return success and the Sheets write is skipped.
 
 ## Next step
 Connect frontend contact form submit to:
