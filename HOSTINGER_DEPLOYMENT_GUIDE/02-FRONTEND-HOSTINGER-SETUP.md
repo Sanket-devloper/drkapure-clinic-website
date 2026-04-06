@@ -13,12 +13,14 @@ Create/update root `.env.production`:
 
 ```env
 VITE_API_BASE_URL=https://api.yourdomain.com
+VITE_SITE_URL=https://yourdomain.com
 ```
 
 Important:
 
 - Variable name must start with `VITE_`
 - Rebuild frontend after changing env values
+- `VITE_SITE_URL` is used for canonical URLs and schema metadata (logo/site URL) in SEO tags
 
 ## 3. Build Frontend
 

@@ -51,7 +51,7 @@ function CountUp({ target, suffix = '' }) {
 
 /* ─── Data: Section 2 – What's Special ─── */
 const specialFeatures = [
-  { icon: UserCheck, title: 'Expert Dermatologist', desc: 'Treatments guided by a highly qualified dermatologist with years of hands-on clinical experience.' },
+  { icon: UserCheck, title: 'Expert Aesthetic Physician', desc: 'Treatments guided by an experienced aesthetic physician, combining medical expertise with advanced cosmetic care.' },
   { icon: Cpu, title: 'Advanced Technology', desc: 'US-FDA approved lasers and cutting-edge devices for safe, effective procedures.' },
   { icon: Heart, title: 'Personalized Care', desc: 'Every treatment plan is custom-designed around your unique skin type, concerns, and goals.' },
   { icon: TrendingUp, title: 'Proven Results', desc: 'Thousands of happy patients with visible, lasting transformations they love.' },
@@ -211,52 +211,54 @@ const faqs = [
 ]
 
 /* ─── Data: Section 8 – Gallery placeholders ─── */
+const homeGalleryVersion = '20260406'
+
 const galleryItems = [
   {
     label: 'Acne Treatment',
     icon: Droplets,
-    beforeImage: '/images/home/before-after/case-01-before.webp',
-    afterImage: '/images/home/before-after/case-01-after.webp',
+    beforeImage: `/images/home/before-after/case-01-before.webp?v=${homeGalleryVersion}`,
+    afterImage: `/images/home/before-after/case-01-after.webp?v=${homeGalleryVersion}`,
     beforePosition: '50% 40%',
     afterPosition: '50% 38%',
   },
   {
     label: 'Pigmentation Correction',
     icon: Sun,
-    beforeImage: '/images/home/before-after/case-02-before.webp',
-    afterImage: '/images/home/before-after/case-02-after.webp',
+    beforeImage: `/images/home/before-after/case-02-before.webp?v=${homeGalleryVersion}`,
+    afterImage: `/images/home/before-after/case-02-after.webp?v=${homeGalleryVersion}`,
     beforePosition: '52% 34%',
     afterPosition: '50% 30%',
   },
   {
     label: 'Anti-Aging Therapy',
     icon: TrendingUp,
-    beforeImage: '/images/home/before-after/case-03-before.webp',
-    afterImage: '/images/home/before-after/case-03-after.webp',
+    beforeImage: `/images/home/before-after/case-03-before.webp?v=${homeGalleryVersion}`,
+    afterImage: `/images/home/before-after/case-03-after.webp?v=${homeGalleryVersion}`,
     beforePosition: '48% 37%',
     afterPosition: '50% 36%',
   },
   {
     label: 'Laser Hair Removal',
     icon: Zap,
-    beforeImage: '/images/home/before-after/case-04-before.webp',
-    afterImage: '/images/home/before-after/case-04-after.webp',
+    beforeImage: `/images/home/before-after/case-04-before.webp?v=${homeGalleryVersion}`,
+    afterImage: `/images/home/before-after/case-04-after.webp?v=${homeGalleryVersion}`,
     beforePosition: '52% 42%',
     afterPosition: '50% 45%',
   },
   {
     label: 'Hair Transplantation',
     icon: Scissors,
-    beforeImage: '/images/home/before-after/case-05-before.webp',
-    afterImage: '/images/home/before-after/case-05-after.webp',
+    beforeImage: `/images/home/before-after/case-05-before.webp?v=${homeGalleryVersion}`,
+    afterImage: `/images/home/before-after/case-05-after.webp?v=${homeGalleryVersion}`,
     beforePosition: '50% 34%',
     afterPosition: '50% 36%',
   },
   {
     label: 'PRP Therapy',
     icon: ShieldCheck,
-    beforeImage: '/images/home/before-after/case-06-before.webp',
-    afterImage: '/images/home/before-after/case-06-after.webp',
+    beforeImage: `/images/home/before-after/case-06-before.webp?v=${homeGalleryVersion}`,
+    afterImage: `/images/home/before-after/case-06-after.webp?v=${homeGalleryVersion}`,
     beforePosition: '53% 40%',
     afterPosition: '50% 38%',
   },
@@ -361,7 +363,9 @@ export default function Home() {
                 <img
                   src={doctorHomeHeroImg}
                   alt="Dr. Smita Kapure - Hair, Skin and Laser Specialist"
-                  loading="lazy"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
                   onError={handleImageError}
                   className="absolute inset-0 w-full h-full object-cover"
                   style={{ objectPosition: '50% 28%' }}
@@ -441,7 +445,7 @@ export default function Home() {
                   },
                 ].map((s, i) => (
                   <AnimatedSection key={s.label} delay={i * 0.1}>
-                    <p className="font-heading text-[clamp(32px,4vw,42px)] font-bold text-brand-heading leading-tight">
+                    <p className="font-heading text-[clamp(32px,4vw,42px)] font-bold text-brand-heading leading-tight tabular-nums inline-block min-w-[5ch]">
                       <CountUp target={s.value} suffix={s.suffix} />
                     </p>
                     {s.href ? (
@@ -956,7 +960,7 @@ export default function Home() {
         {/* Single row — scrolls left continuously */}
         <div className="gallery-marquee mb-10">
           <div className="gallery-marquee-track">
-            {[...galleryItems, ...galleryItems, ...galleryItems].map((item, i) => (
+            {[...galleryItems, ...galleryItems].map((item, i) => (
               <div key={`g-${i}`} className="gallery-card group">
                 <div className="flex h-52 sm:h-56">
                   <div className="flex-1 border-r border-white/40 relative overflow-hidden">
@@ -964,6 +968,8 @@ export default function Home() {
                       src={item.beforeImage}
                       alt={`${item.label} before`}
                       loading="lazy"
+                      fetchPriority="low"
+                      decoding="async"
                       onError={handleImageError}
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       style={{ objectPosition: item.beforePosition || '50% 50%' }}
@@ -978,6 +984,8 @@ export default function Home() {
                       src={item.afterImage}
                       alt={`${item.label} after`}
                       loading="lazy"
+                      fetchPriority="low"
+                      decoding="async"
                       onError={handleImageError}
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       style={{ objectPosition: item.afterPosition || '50% 50%' }}

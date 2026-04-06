@@ -1,16 +1,16 @@
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
 
-const SITE_NAME = "Dr. Kapure's Hair Skin Laser Clinic"
+const SITE_NAME = 'Dr. Smita Kapure Hair, Skin & Laser Clinic'
 const DEFAULT_DESCRIPTION =
-  'Dermatologist-led skin, hair, and laser treatments in Pune. Book consultation for acne, pigmentation, hair fall, anti-aging, and laser care.'
-const DEFAULT_IMAGE = `${import.meta.env.BASE_URL}logo.png`
+  'Trusted hair treatment solutions for hair fall and scalp concerns by Dr. Smita Kapure, combined with customized skin care and modern laser procedures for clear, healthy-looking skin.'
+const DEFAULT_IMAGE_WEBP = `${import.meta.env.BASE_URL}logo.webp`
+const DEFAULT_IMAGE_PNG = `${import.meta.env.BASE_URL}logo.png`
 
 const routeMeta = {
   '/': {
-    title: `${SITE_NAME} | Skin, Hair, and Laser Clinic in Pune`,
-    description:
-      'Advanced skin, hair, and laser treatments in Pune with personalized dermatologist-led care and modern technology.',
+    title: 'Dr. Smita Kapure Hair, Skin & Laser Clinic | Advanced Treatment Care',
+    description: DEFAULT_DESCRIPTION,
   },
   '/about': {
     title: `About | ${SITE_NAME}`,
@@ -89,7 +89,8 @@ export default function SeoManager() {
     '@type': 'MedicalClinic',
     name: SITE_NAME,
     url: siteUrl,
-    image: `${siteUrl}${DEFAULT_IMAGE}`,
+    logo: `${siteUrl}${DEFAULT_IMAGE_PNG}`,
+    image: `${siteUrl}${DEFAULT_IMAGE_PNG}`,
     telephone: '+91 83294 67612',
     address: {
       '@type': 'PostalAddress',
@@ -115,12 +116,16 @@ export default function SeoManager() {
       <meta property="og:title" content={meta.title} />
       <meta property="og:description" content={meta.description} />
       <meta property="og:url" content={canonical} />
-      <meta property="og:image" content={`${siteUrl}${DEFAULT_IMAGE}`} />
+      <meta property="og:image" content={`${siteUrl}${DEFAULT_IMAGE_WEBP}`} />
+      <meta property="og:image:type" content="image/webp" />
+      <meta property="og:image" content={`${siteUrl}${DEFAULT_IMAGE_PNG}`} />
+      <meta property="og:image:type" content="image/png" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
-      <meta name="twitter:image" content={`${siteUrl}${DEFAULT_IMAGE}`} />
+      <meta name="twitter:image" content={`${siteUrl}${DEFAULT_IMAGE_WEBP}`} />
+      <meta name="twitter:image:src" content={`${siteUrl}${DEFAULT_IMAGE_PNG}`} />
 
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
     </Helmet>

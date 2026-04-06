@@ -140,6 +140,7 @@ FRONTEND_ORIGIN=https://yourdomain.com
 
 # Frontend
 VITE_API_BASE_URL=https://api.yourdomain.com
+VITE_SITE_URL=https://yourdomain.com
 ```
 
 ## 📁 Project Structure

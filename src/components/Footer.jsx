@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube } from 'lucide-react'
 
 function openExternal(event, url) {
@@ -7,6 +7,12 @@ function openExternal(event, url) {
 }
 
 export default function Footer() {
+  const navigate = useNavigate()
+
+  const handleBookAppointment = () => {
+    navigate('/contact')
+  }
+
   return (
     <footer className="bg-brand-dark">
       <div className="container-max px-4 lg:px-16 py-14">
@@ -16,7 +22,11 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src={`${import.meta.env.BASE_URL}logo.png`}
+                src={`${import.meta.env.BASE_URL}logo.webp`}
+                onError={(event) => {
+                  event.currentTarget.onerror = null
+                  event.currentTarget.src = `${import.meta.env.BASE_URL}logo.png`
+                }}
                 alt="Dr. Kapure's Hair Skin Laser Clinic"
                 className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover"
               />
@@ -121,9 +131,9 @@ export default function Footer() {
                 </div>
               ))}
             </div>
-            <Link to="/contact" className="btn-primary text-sm py-2.5 w-full justify-center">
+            <button type="button" onClick={handleBookAppointment} className="btn-primary text-sm py-2.5 w-full justify-center">
               Book Appointment
-            </Link>
+            </button>
           </div>
 
         </div>

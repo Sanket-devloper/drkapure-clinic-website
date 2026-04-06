@@ -187,7 +187,11 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 shrink-0">
             <img
-              src={`${import.meta.env.BASE_URL}logo.png`}
+              src={`${import.meta.env.BASE_URL}logo.webp`}
+              onError={(event) => {
+                event.currentTarget.onerror = null
+                event.currentTarget.src = `${import.meta.env.BASE_URL}logo.png`
+              }}
               alt="Dr. Kapure's Hair Skin Laser Clinic"
               className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover"
             />

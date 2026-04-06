@@ -5,7 +5,7 @@ import useScrollReveal from '../../hooks/useScrollReveal'
 import styles from './AboutSections.module.css'
 
 const stats = [
-  { target: 5000, suffix: '+', label: 'Consultations Completed' },
+  { target: 2345, suffix: '+', label: 'Happy Clients' },
   { target: 6, suffix: '+', label: 'Years of Clinical Focus' },
   { target: 30, suffix: '+', label: 'Specialized Treatments' },
   { target: 50, suffix: '/5', label: 'Rating on Google', divisor: 10, href: 'https://google.com/maps?cid=16675003580963966041&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAEYASAB&hl=en-US&source=embed' },
